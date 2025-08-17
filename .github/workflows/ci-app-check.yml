@@ -1,0 +1,27 @@
+name: ci-app-check
+
+on:
+  push:
+    branches: [main]
+
+  pull_request:
+    branches: [main]
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+            node-version: "18.x"
+      - name: Install NPM >= 6.x
+        run: npm install -g npm@6.14.18
+      - run: make setup
+      - run: make test
+      - run: make lint
+
+  
